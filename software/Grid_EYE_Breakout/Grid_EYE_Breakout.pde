@@ -6,9 +6,10 @@ String theBuf;
 int theSize = 8;
 int theScale = 64;
 float[][] theBitmap = new float[8][8];
-float theTemp = 27.0;
+float theTemp = 22.0;
 
 int state = 0;
+String uartName;
 
 void setup(){
   size(theSize*theScale,theSize*theScale);
@@ -16,7 +17,13 @@ void setup(){
 //  textFont(font);
   textSize(24);
   
-  String uartName = Serial.list()[0];
+  println(Serial.list());
+  //String uartName = Serial.list()[1];
+  for(int i = 0; i<Serial.list().length; i++){
+    if(Serial.list()[i].startsWith("/dev/tty.usb")) {
+      uartName = Serial.list()[i];
+    }
+  }
   uart = new Serial(this, uartName, 115200);
   uart.bufferUntil('\n');
 }
